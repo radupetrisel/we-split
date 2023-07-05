@@ -48,7 +48,7 @@ struct ContentView: View {
                 Section {
                     Text(totalPerPerson, format: .currency(code: Self.currencyIdentifier))
                 } header: {
-                    Text("Each person must pay")
+                    Text("Amount per person")
                 }
             }
             .navigationTitle("WeSplit")
