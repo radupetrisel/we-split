@@ -25,7 +25,7 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section {
                     TextField("Amount", value: $checkAmount, format: .currency(code: Self.currencyIdentifier))
@@ -33,29 +33,23 @@ struct ContentView: View {
                         .focused($isAmountFocused)
                     
                     Picker("Number of People", selection: $numberOfPeople) {
-                        ForEach(2..<100, id: \.self) { Text("\($0) people") }
+                        ForEach(1..<100, id: \.self) { Text("^[\($0) person](inflect: true)") }
                     }
                 }
                 
-                Section {
+                Section("How much tip do you want to leave?") {
                     Picker("Tip percentage", selection: $tipPercentage) {
                         ForEach(0..<101, id: \.self) { Text($0, format: .percent) }
                     }
-                } header: {
-                    Text("How much tip do you want to leave?")
                 }
                 
-                Section {
+                Section("Total (including tips)") {
                     Text(total, format: .currency(code: Self.currencyIdentifier))
                         .foregroundColor(tipPercentage == 0 ? .red : .primary)
-                } header: {
-                    Text("Total (including tips)")
                 }
                 
-                Section {
+                Section("Amount per person") {
                     Text(totalPerPerson, format: .currency(code: Self.currencyIdentifier))
-                } header: {
-                    Text("Amount per person")
                 }
             }
             .navigationTitle("WeSplit")
@@ -72,8 +66,6 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+#Preview {
+    ContentView()
 }
